@@ -15,13 +15,16 @@ import android.content.Intent;
 import android.view.View;
 import android.widget.Toast;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 
 public class RegisterActivity extends AppCompatActivity {
 
     private Button btn_ok;
-    private ImageView imgprofile;
+    private CircleImageView imgprofile;
     private EditText etfullname, etemail, ethomepage, etabout;
 
     private static final String FULLNAME_KEY = "fullname";
@@ -76,6 +79,9 @@ public class RegisterActivity extends AppCompatActivity {
                     Uri imageUri = data.getData();
                     Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(),imageUri);
                     imgprofile.setImageBitmap(bitmap);
+
+                    Intent intent = new Intent(this, ProfileActivity.class);
+                    intent.putExtra("bitmapimage", bitmap);
                 }catch (IOException e){
                     Toast.makeText(this, "Can't load image", Toast.LENGTH_SHORT).show();
                     Log.e(TAG, e.getMessage());
